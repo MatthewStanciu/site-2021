@@ -1,17 +1,29 @@
 import Head from 'next/head'
-import theme from '../lib/theme'
+import { PropsWithChildren, ReactNode } from 'react'
+import { colors } from '../lib/theme'
 
-const makeTitle = (title, name) =>
+const makeTitle = (title: string, name: string): string =>
   title === name ? title : `${title} – ${name}`
 
+interface Props extends PropsWithChildren<any> {
+  title?: string
+  name?: string
+  description?: string
+  image?: string
+  url?: string
+  children?: ReactNode[]
+}
+
+const color: string = colors.black
+
 const Meta = ({
-  title = 'Theme Starter', // page title
-  name = 'Theme Starter', // site name
-  description = 'This website was bootstrapped with @lachlanjc’s Next.js Theme Starter.', // page description
-  image = '', // social card image URL
-  url = 'https://next-theme-starter.vercel.app',
+  title = '✨🚀👁 Matthew Stanciu',
+  name = '✨🚀👁 Matthew Stanciu',
+  description = 'A web developer & college freshman from Indiana',
+  image = 'https://dispersions.vercel.app/card.jpg',
+  url = 'https://dispersions.cbcampbell.com',
   children,
-}) => (
+}: Props) => (
   <Head>
     <meta key="og_locale" property="og:locale" content="en_US" />
     <meta key="og_type" property="og:type" content="website" />
@@ -37,18 +49,9 @@ const Meta = ({
         <meta key="tw_img" name="twitter:image" content={image} />
       </>
     )}
-    <meta key="theme_color" name="theme-color" content={theme.colors.primary} />
-    <meta
-      key="tile_color"
-      name="msapplication-TileColor"
-      content={theme.colors.primary}
-    />
-    <link
-      key="safari_icon"
-      rel="mask-icon"
-      href={`${url}/safari-pinned-tab.png`}
-      color={theme.colors.primary}
-    />
+    <meta key="theme_color" name="theme-color" content={color} />
+    <meta key="tile_color" name="msapplication-TileColor" content={color} />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link
       key="apple_icon"
       rel="apple-touch-icon"
@@ -69,7 +72,7 @@ const Meta = ({
       sizes="16x16"
       href={`${url}/favicon-16x16.png`}
     />
-    <link key="manifest" rel="manifest" href={`${url}/site.webmanifest`} />
+    <link key="manifest" rel="manifest" href={`${url}/manifest.webmanifest`} />
     {children}
   </Head>
 )

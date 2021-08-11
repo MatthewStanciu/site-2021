@@ -1,3 +1,28 @@
+import { Theme } from 'theme-ui'
+
+const util = {
+  motion: '@media (prefers-reduced-motion: no-preference)',
+  reduceMotion: '@media (prefers-reduced-motion: reduce)',
+  reduceTransparency: '@media (prefers-reduced-transparency: reduce)',
+  supportsClipText: '@supports (-webkit-background-clip: text)',
+  supportsBackdrop:
+    '@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none)',
+}
+
+interface UtilTheme {
+  motion: string
+  reduceMotion: string
+  reduceTransparency: string
+  supportsClipText: string
+  supportsBackdrop: string
+}
+
+declare module 'theme-ui' {
+  interface Theme {
+    util: UtilTheme
+  }
+}
+
 export const colors = {
   pink: '#e94256',
   red: '#e02200',
@@ -21,7 +46,7 @@ export const colors = {
 
 const fonts = `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Helvetica, sans-serif`
 
-const theme = {
+const theme: Theme = {
   breakpoints: [32, 48, 64, 96, 128].map(w => `${w}em`),
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fontSizes: [12, 16, 20, 24, 32, 48, 64, 96, 128, 160, 192],
@@ -60,8 +85,8 @@ const theme = {
   },
   fonts: {
     monospace: 'ui-monospace, "Roboto Mono", Menlo, Consolas, monospace',
-    heading: `ui-rounded, ${fonts}`,
-    body: `${fonts}`,
+    heading: `IBM Plex Sans, ${fonts}`,
+    body: `IBM Plex Sans, ${fonts}`,
   },
   lineHeights: {
     limit: 0.875,
@@ -268,6 +293,26 @@ const theme = {
         boxShadow: 'elevated',
       },
     },
+    translucent: {
+      backgroundColor: 'rgba(255, 255, 255, 0.98)',
+      color: 'text',
+      boxShadow: 'none',
+      [util.supportsBackdrop]: {
+        backgroundColor: 'rgba(255, 255, 255, 0.625)',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+      },
+    },
+    translucentDark: {
+      backgroundColor: 'rgba(0, 0, 0, 0.875)',
+      color: 'white',
+      boxShadow: 'none',
+      [util.supportsBackdrop]: {
+        backgroundColor: 'rgba(0, 0, 0, 0.625)',
+        backdropFilter: 'saturate(180%) blur(16px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(16px)',
+      },
+    },
   },
   forms: {
     input: {
@@ -414,61 +459,7 @@ const theme = {
       borderBottomWidth: '0.5px',
     },
   },
-  util: {
-    motion: '@media (prefers-reduced-motion: no-preference)',
-    reduceMotion: '@media (prefers-reduced-motion: reduce)',
-    reduceTransparency: '@media (prefers-reduced-transparency: reduce)',
-    supportsClipText: '@supports (-webkit-background-clip: text)',
-    supportsBackdrop:
-      '@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none)',
-  },
-}
-
-theme.util.cx = c => theme.colors[c] || c
-theme.util.gx = (from, to) => `radial-gradient(
-  ellipse farthest-corner at top left,
-  ${theme.util.cx(from)},
-  ${theme.util.cx(to)}
-)`
-theme.util.gxText = (from, to) => ({
-  color: theme.util.cx(to),
-  [theme.util.supportsClipText]: {
-    backgroundImage: theme.util.gx(from, to),
-    backgroundRepeat: 'no-repeat',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-})
-
-theme.cards.translucent = {
-  // variant: 'cards.primary',
-  backgroundColor: 'rgba(255, 255, 255, 0.98)',
-  color: 'text',
-  boxShadow: 'none',
-  [theme.util.supportsBackdrop]: {
-    backgroundColor: 'rgba(255, 255, 255, 0.75)',
-    backdropFilter: 'saturate(180%) blur(20px)',
-    WebkitBackdropFilter: 'saturate(180%) blur(20px)',
-  },
-  [theme.util.reduceTransparency]: {
-    backdropFilter: 'none',
-    WebkitBackdropFilter: 'none',
-  },
-}
-theme.cards.translucentDark = {
-  // variant: 'cards.primary',
-  backgroundColor: 'rgba(0, 0, 0, 0.875)',
-  color: 'white',
-  boxShadow: 'none',
-  [theme.util.supportsBackdrop]: {
-    backgroundColor: 'rgba(0, 0, 0, 0.625)',
-    backdropFilter: 'saturate(180%) blur(16px)',
-    WebkitBackdropFilter: 'saturate(180%) blur(16px)',
-  },
-  [theme.util.reduceTransparency]: {
-    backdropFilter: 'none',
-    WebkitBackdropFilter: 'none',
-  },
+  util
 }
 
 export default theme
