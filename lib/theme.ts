@@ -30,6 +30,10 @@ export const colors = {
   green: '#0b9e43',
   blue: '#0e90db',
   purple: '#6045ec',
+  turquoise: '#007a87',
+  turquoiseDark: '#004f58',
+  coral: '#ff5a5f',
+  coralDark: '#872b2e',
 
   darker: '#121217',
   dark: '#17171d',
@@ -85,8 +89,8 @@ const theme: Theme = {
   },
   fonts: {
     monospace: 'ui-monospace, "Roboto Mono", Menlo, Consolas, monospace',
-    heading: `IBM Plex Sans, ${fonts}`,
-    body: `IBM Plex Sans, ${fonts}`,
+    heading: `"IBM Plex Sans", ${fonts}`,
+    body: `"IBM Plex Sans", ${fonts}`,
   },
   lineHeights: {
     limit: 0.875,
